@@ -1,0 +1,68 @@
+#pragma once
+
+#ifndef _CJSON_H_
+#define _CJSON_H_
+
+//JSON解析内容中的类型
+#define cJSON_False      0
+#define cJSON_True       1
+#define cJSON_NULL       2
+#define cJSON_Numbenr    4
+#define cJSON_Array      5
+#define cJSON_Object     6
+
+/*cJSON结构体的定义*/
+typedef struct CJSON
+{
+	struct CJSON* next, * prev;
+	struct CJSON* child;
+
+	int type;
+
+	/*array以及obect类型需要设立子节点
+	例如["Monday","Tuesday","Wednesday","Thursday","Friday"]
+	*/
+	char* valueString;
+	int valueInt;
+	double valueDouble;
+
+	char* string;
+}cJSON;
+
+/*常用解析函数*/
+
+
+/*
+函数功能:
+	解析json数据，将数据填入json树中
+参数:
+	value (const char*):char*指针，指向待解析的json数据
+返回值:
+	json树的根节点
+*/
+cJSON* cJSON_Parse(const char* value);
+
+/*
+函数功能：
+	从item开始递归遍历，将节点数转化为字符串
+参数：
+	item(cJSON* item):cJSON节点
+返回值：
+	字符串指针，从item节点解析后的树字符串
+注意事项：
+	使用该函数后，需要根据返回的char*指针释放内存
+*/
+char* cJSON_print(cJSON* item);
+
+
+
+
+
+
+
+
+
+
+
+
+#endif // !_CJSON_H_
